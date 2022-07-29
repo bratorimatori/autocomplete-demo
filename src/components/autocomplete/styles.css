@@ -37,14 +37,19 @@
     border: 0;
     vertical-align: top;
     width: 100%;
+    color: rgb(231, 235, 240);
+    text-align: center;
   }
 
   .autocomplete {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     position:absolute;
     border-radius: 4px;
     list-style: none;
     margin-top: 0;
-    max-height: 143px;
+    max-height: 156px;
     overflow-y: auto;
     padding-left: 0;
     width: calc(300px + 1rem);
@@ -58,7 +63,9 @@
   }
 
   .autocomplete li {
-    padding: 8px;
+    margin: auto;
+    padding: 8px 0 8px 0;
+    width: inherit;
   }
 
   .autocomplete > .active {

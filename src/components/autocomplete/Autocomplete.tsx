@@ -35,7 +35,8 @@ const Autocomplete = ({
   const [isShow, setIsShow] = useState(false);
   const [query, setQuery] = useState('');
   const [hasPointerEvent, setHasPointerEvent] = useState(false);
-  const myRef = useRef(null);
+  const ulRef = useRef<HTMLUListElement>(null);
+  const divRef = useRef<HTMLDivElement>(null);
 
   const handleUserKeyPress = useCallback(
     (event: KeyboardEvent<HTMLInputElement>) => {
@@ -62,18 +63,26 @@ const Autocomplete = ({
     [active, filtered, query]
   );
 
-  const handleClickOutside = () => {
-    setActive(0);
-    setIsShow(false);
-    setQuery('');
-  };
+  const handleClickOutside = useCallback(
+    (event: any) => {
+      const hasClikedOutsideList =
+        isShow && ulRef.current && !ulRef.current.contains(event.target);
+      const hasClikedOutsideNoOptions =
+        isShow && divRef.current && !divRef.current.contains(event.target);
+      if (hasClikedOutsideList || hasClikedOutsideNoOptions) {
+        setActive(0);
+        setIsShow(false);
+      }
+    },
+    [isShow]
+  );
 
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
     disablePointerOnKeybord(hasPointerEvent);
     setActiveOnListElement(active);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [handleUserKeyPress, active, hasPointerEvent]);
+  }, [handleUserKeyPress, active, hasPointerEvent, handleClickOutside]);
 
   const isDisabled = disabled === true;
   const hasError = error ? error !== '' : false;
@@ -106,7 +115,7 @@ const Autocomplete = ({
           className='autocomplete'
           id='autocomplete_list'
           tabIndex={0}
-          ref={myRef}
+          ref={ulRef}
         >
           {filtered.map((suggestion, index) => {
             return (
@@ -126,7 +135,7 @@ const Autocomplete = ({
       );
     } else {
       return (
-        <div className='autocomplete no-autocomplete'>
+        <div className='autocomplete no-autocomplete' ref={divRef}>
           <em>No options</em>
         </div>
       );
@@ -135,7 +144,7 @@ const Autocomplete = ({
 
   return (
     <div className='autocomplete-wrapper'>
-      <InputLabel label={label} />
+      <InputLabel label={label} labelFor='auto-input' />
       <input
         type='text'
         onChange={onChange}
@@ -144,6 +153,7 @@ const Autocomplete = ({
         value={query}
         placeholder={placeholder}
         disabled={disabled}
+        id='auto-input'
       />
       {isShow && query && Options()}
       {showError && (
