@@ -23,6 +23,7 @@ interface AutocompleteProps {
   label?: string;
   error?: string;
   id?: string;
+  autoComplete?: 'off' | 'on';
 }
 
 const Autocomplete = ({
@@ -32,6 +33,7 @@ const Autocomplete = ({
   id = 'auto-input',
   disabled,
   error,
+  autoComplete = 'off',
 }: AutocompleteProps): JSX.Element => {
   const [active, setActive] = useState(0);
   const [filtered, setFiltered] = useState<string[]>([]);
@@ -157,6 +159,7 @@ const Autocomplete = ({
         placeholder={placeholder}
         disabled={disabled}
         id={id}
+        autoComplete={autoComplete}
       />
       {isShow && query && !filtered.length && <NoOptions />}
       {isShow && query && Options()}
