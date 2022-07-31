@@ -7,14 +7,6 @@ const mouseEnterHandler = (listItemId: number) => {
   app?.classList.add('active');
 };
 
-// TODO remove this if not needed
-const mouseLeaveHandler = (listItemId: number) => {
-  const li = document.getElementById(`${listItemId}`);
-  if (li !== null) {
-    li.classList.remove('active');
-  }
-};
-
 const disablePointerOnKeybord = (hasPointerEvent: boolean) => {
   const ulElement = document.getElementById('autocomplete_list');
   if (ulElement !== null) {
@@ -44,7 +36,6 @@ const handleSearch = async (
 
 export {
   mouseEnterHandler,
-  mouseLeaveHandler,
   disablePointerOnKeybord,
   setActiveOnListElement,
   handleSearch,

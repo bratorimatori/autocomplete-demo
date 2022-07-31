@@ -1,0 +1,54 @@
+import { Canvas, Meta, Story } from '@storybook/addon-docs';
+
+import Autocomplete from './Autocomplete';
+import { veggies } from './tests/mockedData';
+
+<Meta title='Components/Autocomplete' component={Autocomplete} />
+
+# Autocomplete
+
+<Story name='Autocomplete'>
+  <Autocomplete
+    label='Autocomplete search label'
+    placeholder='Veggies'
+    options={veggies}
+  />
+</Story>
+
+## Usage
+
+- Autocomplete is a text input that proactively suggests options based on the user’s initial input.
+
+## Props
+
+```ts
+interface Props {
+  options: string[];
+  // Options to filter.
+
+  disabled?: boolean;
+  // Disable input.
+
+  placeholder?: string;
+  // Input placeholder.
+
+  label: string;
+  // The label text.
+
+  error?: string;
+  // The error text.
+
+  id?: string;
+  // The id that associates the label and input.
+}
+```
+
+### Guidelines
+
+- Make sure to pass a unique `id` to tie the label and input together.
+- Use concise and clear error messages that explain the problem and how to resolve the issue.
+- Make the label text clear.
+
+### Accessibility
+
+Most of this is handled within the component. Passing the `id` ensures that the text input and label are associated and read out properly.

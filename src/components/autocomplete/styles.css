@@ -7,12 +7,16 @@
     height: 30px;
     border-radius: 4px;
     font-size: medium;
-    background-color: rgb(10, 25, 41);
-    color: rgb(231, 235, 240);
+    background-color: whitesmoke;
+    color: gray;
+  }
+
+  input::placeholder {
+    opacity: 0.5;
   }
 
   input:hover {
-    border: 1px solid whitesmoke;
+    border: 1px solid #1b5ba0;
   }
 
   input:focus-visible {
@@ -25,10 +29,8 @@
   }
 
   .autocomplete-wrapper {
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    -webkit-flex-direction: column;
-    -ms-flex-direction: column;
     flex-direction: column;
     position: relative;
     min-width: 300px;

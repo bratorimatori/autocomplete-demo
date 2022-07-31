@@ -1,6 +1,7 @@
 import {
   useState,
   KeyboardEvent,
+  MouseEvent,
   useEffect,
   useCallback,
   ChangeEvent,
@@ -21,13 +22,15 @@ interface AutocompleteProps {
   placeholder?: string;
   label?: string;
   error?: string;
+  id?: string;
 }
 
 const Autocomplete = ({
   options,
   placeholder = 'Options',
+  label = 'Auto complete search label',
+  id = 'auto-input',
   disabled,
-  label = 'Search ',
   error,
 }: AutocompleteProps): JSX.Element => {
   const [active, setActive] = useState(0);
@@ -101,50 +104,50 @@ const Autocomplete = ({
     setActive(0);
   };
 
-  const onClick = (e: any) => {
+  const onClick = (event: MouseEvent<HTMLElement>) => {
     setActive(0);
     setFiltered([]);
     setIsShow(false);
-    setQuery(e.currentTarget.innerText);
+    setQuery(event.currentTarget.innerText);
   };
 
   const Options = (): JSX.Element => {
-    if (filtered.length) {
-      return (
-        <ul
-          className='autocomplete'
-          id='autocomplete_list'
-          tabIndex={0}
-          ref={ulRef}
-        >
-          {filtered.map((suggestion, index) => {
-            return (
-              <li
-                key={index}
-                onClick={onClick}
-                id={`${index}`}
-                onMouseEnter={() => {
-                  mouseEnterHandler(index);
-                }}
-              >
-                {suggestion}
-              </li>
-            );
-          })}
-        </ul>
-      );
-    } else {
-      return (
-        <div className='autocomplete no-autocomplete' ref={divRef}>
-          <em>No options</em>
-        </div>
-      );
-    }
+    return (
+      <ul
+        className='autocomplete'
+        id='autocomplete_list'
+        tabIndex={0}
+        ref={ulRef}
+      >
+        {filtered.map((suggestion, index) => {
+          return (
+            <li
+              key={index}
+              onClick={onClick}
+              id={`${index}`}
+              onMouseEnter={() => {
+                mouseEnterHandler(index);
+              }}
+            >
+              {suggestion}
+            </li>
+          );
+        })}
+      </ul>
+    );
+  };
+
+  const NoOptions = (): JSX.Element => {
+    return (
+      <div className='autocomplete no-autocomplete' ref={divRef}>
+        <em>No options</em>
+      </div>
+    );
   };
 
   return (
     <div className='autocomplete-wrapper'>
-      <InputLabel label={label} labelFor='auto-input' />
+      <InputLabel label={label} labelFor={id} />
       <input
         type='text'
         onChange={onChange}
@@ -153,8 +156,9 @@ const Autocomplete = ({
         value={query}
         placeholder={placeholder}
         disabled={disabled}
-        id='auto-input'
+        id={id}
       />
+      {isShow && query && !filtered.length && <NoOptions />}
       {isShow && query && Options()}
       {showError && (
         <label role='textbox' aria-label={`Error: ${error}`} className='label'>
