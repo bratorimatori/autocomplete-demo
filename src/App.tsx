@@ -26,7 +26,9 @@ function App() {
     <div className='App'>
       <header className='App-header'>
         <p>Autocomplete Demo</p>
-        <Autocomplete options={hackerRankNews} placeholder='React news' />
+        <div style={{ width: '300px' }}>
+          <Autocomplete options={hackerRankNews} placeholder='React news' />
+        </div>
       </header>
     </div>
   );

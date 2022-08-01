@@ -1,11 +1,11 @@
   input {
-    flex-grow: 1;
     text-overflow: ellipsis;
     border: 1px solid #5090D3;
+    border-radius: 4px;
     padding: 8px;
     min-width: 300px;
+    width: 100%;
     height: 30px;
-    border-radius: 4px;
     font-size: medium;
     background-color: whitesmoke;
     color: gray;
@@ -34,13 +34,8 @@
     flex-direction: column;
     position: relative;
     min-width: 300px;
-    padding: 0;
-    margin: 0;
-    border: 0;
-    vertical-align: top;
     width: 100%;
     color: rgb(231, 235, 240);
-    text-align: center;
   }
 
   .autocomplete {
@@ -53,11 +48,12 @@
     margin-top: 0;
     max-height: 156px;
     overflow-y: auto;
-    padding-left: 0;
-    width: calc(300px + 1rem);
+    padding: 0 8px 0 8px;
+    width: 100%;
     top: 98px;
     font-size: large;
     background-color: #0A1929;
+    overflow-x: hidden;
   }
 
   .no-autocomplete {
@@ -66,8 +62,10 @@
 
   .autocomplete li {
     margin: auto;
-    padding: 8px 0 8px 0;
+    padding: 8px;
+    margin-left: -8px;
     width: inherit;
+    text-align: center;
   }
 
   .autocomplete > .active {
